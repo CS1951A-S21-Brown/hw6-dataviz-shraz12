@@ -10,3 +10,10 @@
 }
 
 /* Include any custom CSS styling here! */
+body
+{
+  margin-top: 0px;
+  margin-left: 30px;
+  margin-right: 0px;
+  margin-bottom: 50px;
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8">
-        <title>Assignment 6 &laquo; Data Visualization Dashboard&raquo;</title>
+        <title>Assignment 6 &laquo; Vidoe Game Sales Dashboard&raquo;</title>
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="main.css"/>
         <!--Feel free to add more CSS files as needed-->
@@ -10,19 +10,136 @@
     </head>
 <body>
     <div class="header">
-        <h3>Assignment 6 &laquo; Data Visualization Dashboard &raquo;</h3>
+        <h3><u>Assignment 6 </u>&laquo; An Overview of Video Game Sales &raquo;</h3>
     </div>
     <!--  We included a basic HTML structure for the 3 graphs here. Feel free to change this if you'd like  -->
+
     <div class="row">
+
         <div class="col-lg-6">
-            <div id="graph1"></div>
-            <div id="graph2"></div><br/>
+            <label for="genre">Choose a genre:</label>
+            <select id="genre" name="genre" onChange="top_publishers_handler()">
+              <option value="All" selected="selected">All Genres</option>
+              <option value="Sports">Sports</option>
+              <option value="Platform">Platform</option>
+              <option value="Racing">Racing</option>
+              <option value="Role-Playing">Role-Playing</option>
+              <option value="Puzzle">Puzzle</option>
+              <option value="Misc">Misc</option>
+              <option value="Shooter">Shooter</option>
+              <option value="Simulation">Puzzle</option>
+              <option value="Action">Action</option>
+              <option value="Fighting">Fighting</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Strategy">Strategy</option>
+            </select>
+            <div id="top_publishers"></div>
+
+            <label for="year">Choose a year:</label>
+            <input type="number" id="year" name="year" min="1980" max="2017" value="2017">
+            <button type="button" onClick = "top_video_games_handler_years()">Get Top Video Games</button>
+
+            <label for="year">or</label>
+            <button id = "all_games" type="button" value="Global_Sales" onClick = "top_video_games_handler_all()">Top Video Games of All Time</button>
+
+            <div id="top_games"></div>
+
+
         </div>
+
         <div class="col-lg-6">
-            <div id="graph3"></div>
+          <label for="sales_region">Choose a region:</label>
+          <select id="sales_region" name="sales_region" onChange="genre_sales_handler()">
+            <option value="Global_Sales" selected="selected">All Regions</option>
+            <option value="NA_Sales">North America</option>
+            <option value="EU_Sales">Europe</option>
+            <option value="JP_Sales">Japan</option>
+            <option value="Other_Sales">Other Regions</option>
+          </select>
+
+            <div id="regional_sales"> </div>
         </div>
     </div>
-    <!--Feel free to add more JavaScript files as needed-->
+    <hr>
+
+    <div class="header">
+        <h5> <u> Written Questions </u> </h5>
+    </div>
+
+    <div class="row">
+      <ol>
+        <li> The first graph (top left) provides information about the top publishers for each video game genre. Because the defintion
+          of a "top" publisher is open to interpretation, I choose to graph two values for each company: number of games produced and
+          global sales of the publisher. These two values are plotted against eachother on a scatter plot, where each data point
+          represents a different company (exact info can be retrieved by hover over a datapoint). Specifically, this graph addresses
+          question 3 and allows the user to choose a top publisher in a genre based on any metric of their choice.
+          <br><br>
+          The second graph (bottom left) provide information about the top games in a given year (or all time) by measuring the global
+          sales of a game. This allows the user to address question 1 directly by letting the user to visualize sales in an easy-to-read
+          format. The video games are also conveniently ranked sequentially by sales in the bar chart, so the user only need to read
+          down the chart in a given year to get the top 10 video games in a specific year. Note that not every year in the dataset is
+          represented 10 times, in which case all the games from that year are ranked in order by global sales.
+          <br><br>
+          The third graph (right), is a bar chart which represents sales broken down by genre in a given region. For a given region, the
+          bar corresponding to the top selling genre is conveniently highlighted in red, providing easier visbility of the top selling
+          genre. This chart directly addresses question 2, allowing the user to see which genre is most popular in specific regions (taking
+          sales a measure of "popularity").
+        </li>
+
+        <br>
+        <li>The biggest advantage the the D3 library provided was the ability to make dynamic graphs, which allows for the compact
+          visualization of multiple graphs in a clean and efficient way. Rather than having to display 6 graphs for sales broken down
+          by genre (one for each region), one is able to see a single graph that shifts based on the specific region of interest.
+          <br><br>
+          The second advtange of using D3 is the sheer custimizability of the library. By providing a vast number of graph frameworks to
+          use, the designer has lots of choices on how best they want to display their data. For instance, I was able to customize the
+          color of the bars in my bar charts very easily, highlighting bars which corresponded to different values on my graph. Other
+          libraries (such as matplotlib in python) do not allow for such freedom, whereas D3 provides a plethora of options for users.
+          <br><br>
+          The third advantage of using D3 was the ability to integrate my graphs directly into the HTML page. This allows for viewers to
+          interact with the data, adding an "exploratory" aspect to the data which other libraries fail to provide. This allowed me to
+          create more interesting graphs which draw the user in, rather than creating stale, static graphs which fail to hold people's
+          attention.
+        </li>
+
+        <br>
+        <li>The biggest disadvantage of using D3 is how inefficient the libary is, especially in respect to time. Because each graph
+          can require unique customization, creating a large number of graphs for data visualization can be unnecessarily complicated
+          and time consuming. The coder must have have complete mastery of the D3 library (which has a steep learning curve) and even
+          then, coding each specific part of a graph can take a fair amount of time, given how much customization is possible.
+          <br><br>
+          The second disadvantage of using D3 is that the updates to the graph take place in real time, meaning the thousands of calculations
+          must be done per second to update the graph. If the dataset being used in a graph is very large (on the scale of millions),
+          updating the graphs may take a very large amount of time top update, causing lag and other delays.
+          <br><br>
+          The third disadvantage of using D3 (specifically the dynamic graphs) is that it makes side-by-side comparisons of data much harder
+          to visualize. For instance, if the user desires to see what sales by genre in Japan and Europe like, such comparisons can not be
+          done directly. A user must first look at sales in Japan, then Europe, and there is no easy way of view such data at the same time.
+          While these graphs theoretically could have been programmed to be side by side, the amount of time and code this would takes makes
+          the whole process inefficient and overall a waste of time and space.
+
+        </li>
+
+        <br>
+        <li>My dashboard is relatively accessible to most users, displaying data in a clean, efficient way. The color schemes are distinct and
+          complement eachother nicely, while not being too distracting. The graphs are also accessible to colorblind users, and the color
+          schemes for the bar graphs (specifically the one documenting genre sales) are chosen to allow visiblity, no matter the different types
+          of potential colorblindness. On further analysis, there are two groups my data visualizations are inaccessible to. The first is blind
+          individuals, who have no way of seeing anything on my dashboard. I could have included audio components to my graphs to allow accessbility
+          to this group, playing out sounds for the top categories/datapoints for each graph. The second group which might have trouble is indviduals
+          with poor eyesight. Because my text is rather small, I could have rectified this issue simply by choosing bigger font sizes for all of
+          my data.
+        </li>
+
+        <br>
+        <li>To make my dashboard more accessible to all audiences, I should have been more conscientious of my layout in the beginning of the
+          design process and font size during the end of the design process. This would have allowed me to realize that I need to make my graphs
+          slightly bigger with bigger font sizes for readability. I would have also liked to include an audio component, but due to the complexity
+          of this problem and the time constraints for this class, this was not a feasible option.
+        </li>
+      </ol>
+    </div>
+
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
